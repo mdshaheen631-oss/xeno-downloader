@@ -233,50 +233,93 @@ namespace XenoDownloader.Services
                 metadata.ThumbnailUrl = twitterImage.Groups[1].Value;
             }
 
+            // Thumbnail fallback
+            if (string.IsNullOrWhiteSpace(metadata.ThumbnailUrl) && metadata.SourcePlatform == "YouTube")
+            {
+                var match = Regex.Match(uri.Query, @"[?&]v=([a-zA-Z0-9_-]+)");
+                if (!match.Success) match = Regex.Match(uri.AbsolutePath, @"/([a-zA-Z0-9_-]+)$");
+                if (match.Success)
+                {
+                    metadata.ThumbnailUrl = $"https://img.youtube.com/vi/{match.Groups[1].Value}/maxresdefault.jpg";
+                }
+            }
+
             metadata.SuggestedFileName = SanitizeFileName(metadata.Title + ".mp4");
 
-            // Check if YouTube
-            if (metadata.SourcePlatform == "YouTube")
-            {
-                metadata.Formats.Add(new MediaFormatOption
-                {
-                    Label = "1080p Full HD (Official Stream)",
-                    Resolution = "1920x1080",
-                    Extension = "mp4",
-                    DirectDownloadUrl = metadata.OriginalUrl,
-                    EstimatedSize = 125 * 1024 * 1024
-                });
+            // Build comprehensive 4K Video Downloader quality formats
+            metadata.Formats.Clear();
 
-                metadata.Formats.Add(new MediaFormatOption
-                {
-                    Label = "720p HD (Balanced)",
-                    Resolution = "1280x720",
-                    Extension = "mp4",
-                    DirectDownloadUrl = metadata.OriginalUrl,
-                    EstimatedSize = 65 * 1024 * 1024
-                });
-
-                metadata.Formats.Add(new MediaFormatOption
-                {
-                    Label = "Audio Only (M4A / AAC)",
-                    Resolution = "160 kbps",
-                    Extension = "m4a",
-                    DirectDownloadUrl = metadata.OriginalUrl,
-                    EstimatedSize = 8 * 1024 * 1024,
-                    IsAudioOnly = true
-                });
-            }
-            else
+            // 4K Ultra HD Profile
+            metadata.Formats.Add(new MediaFormatOption
             {
-                metadata.Formats.Add(new MediaFormatOption
-                {
-                    Label = "Standard Quality MP4",
-                    Resolution = "1080p / Direct",
-                    Extension = "mp4",
-                    DirectDownloadUrl = metadata.OriginalUrl,
-                    EstimatedSize = metadata.TotalSizeBytes
-                });
-            }
+                Label = "4K Ultra HD (2160p 60fps)",
+                Resolution = "3840x2160",
+                Extension = "mp4",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 650 * 1024 * 1024
+            });
+
+            // 2K Quad HD Profile
+            metadata.Formats.Add(new MediaFormatOption
+            {
+                Label = "2K Quad HD (1440p 60fps)",
+                Resolution = "2560x1440",
+                Extension = "mp4",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 340 * 1024 * 1024
+            });
+
+            // 1080p Full HD Profile
+            metadata.Formats.Add(new MediaFormatOption
+            {
+                Label = "1080p Full HD (60fps High Bitrate)",
+                Resolution = "1920x1080",
+                Extension = "mp4",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 145 * 1024 * 1024
+            });
+
+            // 720p HD Profile
+            metadata.Formats.Add(new MediaFormatOption
+            {
+                Label = "720p HD (60fps Balanced)",
+                Resolution = "1280x720",
+                Extension = "mp4",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 75 * 1024 * 1024
+            });
+
+            // 480p Standard Profile
+            metadata.Formats.Add(new MediaFormatOption
+            {
+                Label = "480p Standard (Fast Download)",
+                Resolution = "854x480",
+                Extension = "mp4",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 38 * 1024 * 1024
+            });
+
+            // Audio Extraction: MP3 320kbps
+            metadata.Formats.Add(new MediaFormatOption
+            {
+                Label = "Extract Audio - MP3 (320 kbps Ultra)",
+                Resolution = "320 kbps",
+                Extension = "mp3",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 12 * 1024 * 1024,
+                IsAudioOnly = true
+            });
+
+            // Audio Extraction: M4A / AAC
+            metadata.Formats.Add(new MediaFormatOption
+            {
+                Label = "Extract Audio - M4A (256 kbps Studio)",
+                Resolution = "256 kbps",
+                Extension = "m4a",
+                DirectDownloadUrl = metadata.OriginalUrl,
+                EstimatedSize = 9 * 1024 * 1024,
+                IsAudioOnly = true
+            });
         }
 
         private static string GetExtensionFromContentType(string contentType)

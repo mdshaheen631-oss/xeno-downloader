@@ -13,6 +13,12 @@ namespace XenoDownloader.Models
         public bool SoundAlertOnComplete { get; set; } = false;
         public int BufferSizeBytes { get; set; } = 65536; // 64 KB streaming buffer for optimal performance
 
+        // 4K Video Downloader Smart Mode
+        public bool SmartModeEnabled { get; set; } = false;
+        public string SmartModeQuality { get; set; } = "4K / 2160p (Ultra HD)";
+        public string SmartModeFormat { get; set; } = "MP4";
+        public int ParallelSegmentsPerDownload { get; set; } = 4; // High-speed segmented download
+
         public AppSettings()
         {
             try

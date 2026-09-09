@@ -32,6 +32,21 @@
 
                     <Separator Background="{StaticResource BrushBorder}" Margin="0,8,0,16"/>
 
+                    <!-- 4K Video Downloader Smart Mode -->
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Smart Mode (1-Click Instant Download)" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource BrushAccentCyan}"/>
+                            <TextBlock Text="When enabled, analyzing or pasting video links starts downloading automatically using your preset resolution (e.g. 4K Ultra HD)." FontSize="12" Foreground="{StaticResource BrushTextSecondary}"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding SettingsService.CurrentSettings.SmartModeEnabled, Mode=TwoWay}" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Separator Background="{StaticResource BrushBorder}" Margin="0,8,0,16"/>
+
                     <!-- Max Simultaneous Downloads -->
                     <Grid Margin="0,0,0,16">
                         <Grid.ColumnDefinitions>

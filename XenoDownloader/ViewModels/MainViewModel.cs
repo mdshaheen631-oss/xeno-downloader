@@ -257,7 +257,17 @@ namespace XenoDownloader.ViewModels
                 var result = await AnalyzerService.AnalyzeUrlAsync(url);
                 CurrentMedia = result;
                 SelectedFormat = result.Formats.FirstOrDefault();
-                CurrentSection = "Downloader";
+
+                // 4K Video Downloader Smart Mode: If enabled, start download immediately with preset preferences
+                if (SettingsService.CurrentSettings.SmartModeEnabled)
+                {
+                    ExecuteStartDownload();
+                    CurrentSection = "Downloads";
+                }
+                else
+                {
+                    CurrentSection = "Downloader";
+                }
             }
             catch (Exception ex)
             {

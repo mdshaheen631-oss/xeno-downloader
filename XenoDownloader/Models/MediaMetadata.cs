@@ -17,6 +17,8 @@ namespace XenoDownloader.Models
         public string OriginalUrl { get; set; } = string.Empty;
         public string? ThumbnailUrl { get; set; }
         public string Duration { get; set; } = "--:--";
+        public string Author { get; set; } = string.Empty;
+        public string ViewCount { get; set; } = string.Empty;
         public string SuggestedFileName { get; set; } = string.Empty;
         public string ContentType { get; set; } = "video/mp4";
         public long TotalSizeBytes { get; set; }
