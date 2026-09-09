@@ -8,7 +8,7 @@ using XenoDownloader.ViewModels;
 
 namespace XenoDownloader.Views
 {
-    public partial class BrowserView : UserControl
+    public partial class BrowserView : System.Windows.Controls.UserControl
     {
         private bool _isInitialized;
 
@@ -94,7 +94,7 @@ namespace XenoDownloader.Views
             NavigateTo(TxtAddress.Text);
         }
 
-        private void TxtAddress_KeyDown(object sender, KeyEventArgs e)
+        private void TxtAddress_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
