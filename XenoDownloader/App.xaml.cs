@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Threading;
 using XenoDownloader.Services;
-using Application = System.Windows.Application;
 
 namespace XenoDownloader
 {

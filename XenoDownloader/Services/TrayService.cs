@@ -2,7 +2,6 @@ using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using Application = System.Windows.Application;
 
 namespace XenoDownloader.Services
 {
