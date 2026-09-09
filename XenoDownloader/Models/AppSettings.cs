@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace XenoDownloader.Models
 {
     public class AppSettings

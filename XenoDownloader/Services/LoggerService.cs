@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace XenoDownloader.Services
 {
     public static class LoggerService

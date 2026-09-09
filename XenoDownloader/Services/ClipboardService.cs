@@ -34,9 +34,9 @@ namespace XenoDownloader.Services
         {
             try
             {
-                if (Clipboard.ContainsText())
+                if (System.Windows.Clipboard.ContainsText())
                 {
-                    return Clipboard.GetText().Trim();
+                    return System.Windows.Clipboard.GetText().Trim();
                 }
             }
             catch (Exception ex)
@@ -50,9 +50,9 @@ namespace XenoDownloader.Services
         {
             try
             {
-                if (!Clipboard.ContainsText()) return;
+                if (!System.Windows.Clipboard.ContainsText()) return;
 
-                string currentText = Clipboard.GetText().Trim();
+                string currentText = System.Windows.Clipboard.GetText().Trim();
                 if (string.IsNullOrWhiteSpace(currentText) || currentText == _lastClipboardText) return;
 
                 _lastClipboardText = currentText;
