@@ -1,0 +1,59 @@
+name: Build Xeno Downloader Windows
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Package Windows Desktop App
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Inno Setup
+        run: |
+          choco install innosetup --no-progress -y
+
+      - name: Restore Dependencies
+        run: |
+          dotnet restore XenoDownloader.sln
+
+      - name: Build Project
+        run: |
+          dotnet build XenoDownloader.sln --configuration Release --no-restore
+
+      - name: Publish Windows x64 Application
+        run: |
+          dotnet publish XenoDownloader/XenoDownloader.csproj --configuration Release --runtime win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./publish
+
+      - name: Build Inno Setup Installer
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\iscc.exe" installer/XenoDownloaderSetup.iss
+
+      - name: Prepare Artifacts Bundle
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path ./build-artifacts
+          if (Test-Path ./installer/Output/XenoDownloader-Setup-v1.0.0.exe) {
+            Copy-Item -Path ./installer/Output/XenoDownloader-Setup-v1.0.0.exe -Destination ./build-artifacts/
+          }
+          Compress-Archive -Path ./publish/* -DestinationPath ./build-artifacts/XenoDownloader-Portable-win-x64.zip -Force
+          Get-ChildItem -Path ./build-artifacts
+
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xeno-Downloader-Windows
+          path: ./build-artifacts/*
+          if-no-files-found: error

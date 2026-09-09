@@ -1,0 +1,108 @@
+<UserControl x:Class="XenoDownloader.Views.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="900">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32" MaxWidth="800">
+            <!-- App Card -->
+            <Border Style="{StaticResource CardBorderStyle}" Padding="32" Margin="0,0,0,24">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- App Icon / Logo -->
+                    <Border Width="100" Height="100" CornerRadius="18" Background="#151D2C" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Margin="0,0,24,0" ClipToBounds="True">
+                        <Grid>
+                            <Path Data="{StaticResource IconDownload}" Fill="{StaticResource BrushAccentCyan}" Width="48" Height="48" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Image Source="pack://application:,,,/Resources/xeno_logo.jpg" Stretch="UniformToFill"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Title & Details -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Xeno Downloader" FontSize="26" FontWeight="Bold" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,4"/>
+                        <TextBlock Text="Version 1.0.0 (Native Windows x64 Release)" FontSize="13" Foreground="{StaticResource BrushAccentCyan}" Margin="0,0,0,8"/>
+                        <TextBlock Text="A modern, high-speed, lightweight media downloader and media browser engineered in C# and .NET 8 WPF." FontSize="13" Foreground="{StaticResource BrushTextSecondary}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Technical & System Architecture -->
+            <Border Style="{StaticResource CardBorderStyle}" Padding="24" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="Architecture &amp; Specifications" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,12"/>
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Platform" Foreground="{StaticResource BrushTextMuted}"/>
+                        <TextBlock Grid.Column="1" Text="Windows 10 / Windows 11 (64-bit)" Foreground="{StaticResource BrushTextPrimary}"/>
+                    </Grid>
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Runtime Target" Foreground="{StaticResource BrushTextMuted}"/>
+                        <TextBlock Grid.Column="1" Text=".NET 8.0 Desktop Runtime" Foreground="{StaticResource BrushTextPrimary}"/>
+                    </Grid>
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="UI Engine" Foreground="{StaticResource BrushTextMuted}"/>
+                        <TextBlock Grid.Column="1" Text="Windows Presentation Foundation (WPF) Fluent Dark" Foreground="{StaticResource BrushTextPrimary}"/>
+                    </Grid>
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Embedded Browser" Foreground="{StaticResource BrushTextMuted}"/>
+                        <TextBlock Grid.Column="1" Text="Microsoft Edge WebView2 Control" Foreground="{StaticResource BrushTextPrimary}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Download Engine" Foreground="{StaticResource BrushTextMuted}"/>
+                        <TextBlock Grid.Column="1" Text="Async Streaming I/O with HTTP Range byte resumption" Foreground="{StaticResource BrushTextPrimary}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Legal & DRM Policy Card -->
+            <Border Style="{StaticResource CardBorderStyle}" Padding="24" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="Compliance &amp; Policy Notice" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,8"/>
+                    <TextBlock Text="Xeno Downloader respects content creators and service provider policies. The software does not circumvent access controls, encryption, or digital rights management (DRM). Downloads are intended only for legally authorized content, user-owned media, and creative commons / public domain streams."
+                               FontSize="12" LineHeight="18" Foreground="{StaticResource BrushTextSecondary}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Links & Action Buttons -->
+            <Border Style="{StaticResource CardBorderStyle}" Padding="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Source code, releases, and CI/CD pipelines are managed via GitHub Actions." FontSize="13" Foreground="{StaticResource BrushTextSecondary}" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding OpenGitHubCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="View on GitHub" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

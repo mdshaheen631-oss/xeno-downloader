@@ -1,0 +1,6 @@
+{
+  "name": "Xeno Downloader",
+  "description": "Modern, high-performance native Windows desktop media downloader and browser with download management and system tray integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

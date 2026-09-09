@@ -1,0 +1,156 @@
+<Window x:Class="XenoDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XenoDownloader.ViewModels"
+        xmlns:views="clr-namespace:XenoDownloader.Views"
+        xmlns:conv="clr-namespace:XenoDownloader.Converters"
+        mc:Ignorable="d"
+        Title="Xeno Downloader" Height="780" Width="1200" MinHeight="650" MinWidth="950"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BrushBg}"
+        Icon="Resources/AppIcon.ico">
+
+    <Window.Resources>
+        <conv:SectionVisibilityConverter x:Key="SectionVisibilityConverter"/>
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar Navigation -->
+        <Border Grid.Column="0" Background="{StaticResource BrushSidebar}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Brand Header -->
+                <Border Grid.Row="0" Padding="20,24" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="40" Height="40" CornerRadius="10" Background="#182236" BorderBrush="{StaticResource BrushAccentCyan}" BorderThickness="1" Margin="0,0,12,0" ClipToBounds="True">
+                            <Grid>
+                                <Path Data="{StaticResource IconDownload}" Fill="{StaticResource BrushAccentCyan}" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Image Source="pack://application:,,,/Resources/xeno_logo.jpg" Stretch="UniformToFill"/>
+                            </Grid>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Xeno Downloader" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushTextPrimary}"/>
+                            <TextBlock Text="v1.0.0 Native" FontSize="11" Foreground="{StaticResource BrushAccentCyan}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Navigation Menu Items -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="12,16,12,16">
+                    <StackPanel>
+                        <!-- Home -->
+                        <Button Style="{StaticResource NavButtonStyle}" Command="{Binding NavigateCommand}" CommandParameter="Home" Margin="0,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconHome}" Fill="{StaticResource BrushAccentCyan}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0"/>
+                                <TextBlock Text="Home" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Browser -->
+                        <Button Style="{StaticResource NavButtonStyle}" Command="{Binding NavigateCommand}" CommandParameter="Browser" Margin="0,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconBrowser}" Fill="{StaticResource BrushTextSecondary}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0"/>
+                                <TextBlock Text="Browser" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Downloader -->
+                        <Button Style="{StaticResource NavButtonStyle}" Command="{Binding NavigateCommand}" CommandParameter="Downloader" Margin="0,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconSpeed}" Fill="{StaticResource BrushTextSecondary}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0"/>
+                                <TextBlock Text="Downloader" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Downloads Manager -->
+                        <Button Style="{StaticResource NavButtonStyle}" Command="{Binding NavigateCommand}" CommandParameter="Downloads" Margin="0,0,0,6">
+                            <Grid Width="180">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Path Data="{StaticResource IconList}" Fill="{StaticResource BrushTextSecondary}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0"/>
+                                    <TextBlock Text="Downloads" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <Border Background="{StaticResource BrushAccentCyan}" CornerRadius="10" Padding="6,2" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Visibility="{Binding ActiveDownloadsCount, Converter={x:Null}}">
+                                    <TextBlock Text="{Binding ActiveDownloadsCount}" FontSize="10" FontWeight="Bold" Foreground="#050811"/>
+                                </Border>
+                            </Grid>
+                        </Button>
+
+                        <Separator Background="{StaticResource BrushBorder}" Margin="4,12,4,12"/>
+
+                        <!-- Settings -->
+                        <Button Style="{StaticResource NavButtonStyle}" Command="{Binding NavigateCommand}" CommandParameter="Settings" Margin="0,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconSettings}" Fill="{StaticResource BrushTextSecondary}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0"/>
+                                <TextBlock Text="Settings" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- About -->
+                        <Button Style="{StaticResource NavButtonStyle}" Command="{Binding NavigateCommand}" CommandParameter="About">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconInfo}" Fill="{StaticResource BrushTextSecondary}" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0"/>
+                                <TextBlock Text="About" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer Status -->
+                <Border Grid.Row="2" Padding="16,14" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,1,0,0" Background="#0C101A">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Engine Status" FontSize="11" Foreground="{StaticResource BrushTextMuted}"/>
+                            <TextBlock Text="Optimized (Stream I/O)" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushSuccess}"/>
+                        </StackPanel>
+                        <Border Grid.Column="1" Background="#161F30" CornerRadius="6" Padding="6,4">
+                            <TextBlock Text="{Binding TotalSpeedDisplay}" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushAccentCyan}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Column="1">
+            <!-- Home View -->
+            <views:HomeView Visibility="{Binding CurrentSection, Converter={StaticResource SectionVisibilityConverter}, ConverterParameter=Home}"/>
+
+            <!-- Browser View -->
+            <views:BrowserView Visibility="{Binding CurrentSection, Converter={StaticResource SectionVisibilityConverter}, ConverterParameter=Browser}"/>
+
+            <!-- Downloader View -->
+            <views:DownloaderView Visibility="{Binding CurrentSection, Converter={StaticResource SectionVisibilityConverter}, ConverterParameter=Downloader}"/>
+
+            <!-- Downloads View -->
+            <views:DownloadsView Visibility="{Binding CurrentSection, Converter={StaticResource SectionVisibilityConverter}, ConverterParameter=Downloads}"/>
+
+            <!-- Settings View -->
+            <views:SettingsView Visibility="{Binding CurrentSection, Converter={StaticResource SectionVisibilityConverter}, ConverterParameter=Settings}"/>
+
+            <!-- About View -->
+            <views:AboutView Visibility="{Binding CurrentSection, Converter={StaticResource SectionVisibilityConverter}, ConverterParameter=About}"/>
+        </Grid>
+    </Grid>
+</Window>
